@@ -1,3 +1,5 @@
+# ORM 형식으로 DB 쿼리문이 작성된 파일
+# 모델
 from datetime import datetime
 
 from sqlalchemy.orm import Session
