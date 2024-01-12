@@ -10,6 +10,8 @@
     let total = 0
     $: total_page = Math.ceil(total/size)
 
+    let customColor = '#969696'
+
     function get_question_list(_page) {
         let params = {
             page: _page,
@@ -41,6 +43,9 @@
             <td>{ total - ($page * size) - i }</td>
             <td>
                 <a use:link href="/detail/{question.id}">{question.subject}</a>
+                {#if question.answers.length > 0}
+                <span class="text-danger small mx-2">[{question.answers.length}]</span>
+                {/if}
             </td>
             <!-- hh: 시간(0~12시), a: 오전, 오후-->
             <td>{moment(question.create_date).format("YYYY년 MM월 DD일 hh:mm a")}</td>  
