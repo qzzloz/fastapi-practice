@@ -18,11 +18,18 @@ fetch API를 사용한 HTTP 요청 전송: fetch 함수를 사용하여 서버�
 
 응답 처리: 서버로부터의 응답에 대한 처리를 수행합니다. 응답 상태 코드를 확인하여 성공 또는 실패에 따라 적절한 동작을 수행하며, 성공 또는 실패 시에는 콜백 함수를 호출하거나 알림을 표시합니다.
 */
+import qs from "qs"
 
 const fastapi = (operation, url, params, success_callback, failure_callback) => {
     let method = operation
     let content_type = 'application/json'
     let body = JSON.stringify(params)
+
+    if(operation === 'login'){
+        method = 'post',
+        content_type = 'application/x-www-form-urlencoded',
+        body = qs.stringify(params)
+    }
 
     let _url = import.meta.env.VITE_SERVER_URL+url
     if(method === 'get') {

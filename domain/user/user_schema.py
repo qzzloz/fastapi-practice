@@ -18,3 +18,8 @@ class UserCreate(BaseModel):
         if 'password1' in info.data and v != info.data['password1']:    # info.data에는 UserCreate의 속성들이 {변수명:값, ...} 형태로 전달된다.
             raise ValueError("비밀번호가 일치하지 않습니다.")
         return v
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    username: str
