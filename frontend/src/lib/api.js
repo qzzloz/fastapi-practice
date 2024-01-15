@@ -34,11 +34,6 @@ const fastapi = (operation, url, params, success_callback, failure_callback) => 
         body = qs.stringify(params)
     }
 
-    const _access_token = get(access_token)
-    if(_access_token){
-        options.headers["Authorization"] = "Bearer " + _access_token
-    }
-
     let _url = import.meta.env.VITE_SERVER_URL+url
     if(method === 'get') {
         _url += "?" + new URLSearchParams(params)
@@ -49,6 +44,11 @@ const fastapi = (operation, url, params, success_callback, failure_callback) => 
         headers: {
             "Content-Type": content_type
         }
+    }
+
+    const _access_token = get(access_token)
+    if(_access_token){
+        options.headers["Authorization"] = "Bearer " + _access_token
     }
 
     if (method !== 'get') {

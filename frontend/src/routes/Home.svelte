@@ -29,24 +29,26 @@
 <div class="container my-3">
     <table class="table">
         <thead>
-        <tr class="table-dark">
+        <tr class="text-center table-dark">
             <th>번호</th>
-            <th>제목</th>
+            <th style="width:50%">제목</th>
+            <th>글쓴이</th>
             <th>작성일시</th>
         </tr>
         </thead>
         <tbody>
         {#each question_list as question, i}
         <tr>
-            <td>{ total - ($page * size) - i }</td>
+            <td class="text-center">{ total - ($page * size) - i }</td>
             <td>
                 <a use:link href="/detail/{question.id}">{question.subject}</a>
                 {#if question.answers.length > 0}
                 <span class="text-danger small mx-2">[{question.answers.length}]</span>
                 {/if}
             </td>
+            <td class="text-center">{question.user ? question.user.username : ""}</td>
             <!-- hh: 시간(0~12시), a: 오전, 오후-->
-            <td>{moment(question.create_date).format("YYYY년 MM월 DD일 hh:mm a")}</td>  
+            <td class="text-center">{moment(question.create_date).format("YYYY년 MM월 DD일 hh:mm a")}</td>  
         </tr>
         {/each}
         </tbody>
