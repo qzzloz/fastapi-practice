@@ -19,6 +19,9 @@ fetch API를 사용한 HTTP 요청 전송: fetch 함수를 사용하여 서버�
 응답 처리: 서버로부터의 응답에 대한 처리를 수행합니다. 응답 상태 코드를 확인하여 성공 또는 실패에 따라 적절한 동작을 수행하며, 성공 또는 실패 시에는 콜백 함수를 호출하거나 알림을 표시합니다.
 */
 import qs from "qs"
+import { access_token, is_login, username } from "./store"
+import { get } from "svelte/store"
+import { push } from "svelte-spa-router"
 
 const fastapi = (operation, url, params, success_callback, failure_callback) => {
     let method = operation
@@ -29,6 +32,11 @@ const fastapi = (operation, url, params, success_callback, failure_callback) => 
         method = 'post',
         content_type = 'application/x-www-form-urlencoded',
         body = qs.stringify(params)
+    }
+
+    const _access_token = get(access_token)
+    if(_access_token){
+        options.headers["Authorization"] = "Bearer " + _access_token
     }
 
     let _url = import.meta.env.VITE_SERVER_URL+url
@@ -61,6 +69,14 @@ const fastapi = (operation, url, params, success_callback, failure_callback) => 
                         if(success_callback) {
                             success_callback(json)
                         }
+                    
+                    // operation이 'login' 인 경우는 아이디 또는 비밀번호를 틀리게 입력했을 경우에 401 오류가 발생하므로 제외해야 한다.
+                    }else if(operation != 'login' && response.status===401){    // token time out
+                        access_token.set('')    
+                        username.set('')
+                        is_login.set(false)
+                        alert('로그인이 필요합니다.')
+                        push('/user-login')
                     }else {
                         if (failure_callback) {
                             failure_callback(json)
