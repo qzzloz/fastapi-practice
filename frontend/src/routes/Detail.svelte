@@ -77,9 +77,9 @@
 <div class="container my-3">
     <!--질문-->
     <h2 class="head">{question.subject}</h2>
-    <div class="question card">
-        <div class="card body">
-            <div class="card text" style="white-space: pre-line;">{question.content}</div>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{question.content}</div>
             <div class="d-flex justify-content-end">
                 {#if question.modify_date}
                 <div class="badge bg-light text-dark p-2 text-start mx-3">
