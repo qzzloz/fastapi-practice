@@ -19,10 +19,14 @@ class Answer(BaseModel):
     user: User | None
     question_id: int
     modify_date: datetime.datetime | None = None  # modify_date는 수정이 발생할 경우에만 그 값이 생성되므로 디폴트 값으로 None을 설정한다.
+    voter: list[User] = []
 
 
 class AnswerUpdate(AnswerCreate):
     answer_id: int
 
 class AnswerDelete(BaseModel):
+    answer_id: int
+
+class AnswerVote(BaseModel):
     answer_id: int

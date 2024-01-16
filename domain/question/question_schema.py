@@ -13,6 +13,7 @@ class Question(BaseModel):
     answers: list[Answer] = []
     user: User | None   # user 항목은 Question 모델을 Question 스키마에 매핑할 때 자동으로 값이 채워질 것이다.
     modify_date: datetime.datetime | None = None    # modify_date는 수정이 발생할 경우에만 그 값이 생성되므로 디폴트 값으로 None을 설정한다.
+    voter: list[User] = []
 
 class QuestionCreate(BaseModel):
     subject: str
@@ -32,4 +33,7 @@ class QuestionUpdate(QuestionCreate):   # QuestionCreate 스키마 상속받아�
     question_id: int
 
 class QuestionDelete(BaseModel):
+    question_id: int
+
+class QuestionVote(BaseModel):
     question_id: int
