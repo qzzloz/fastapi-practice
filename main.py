@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from starlette.responses import FileResponse
+from starlette.staticfiles import StaticFiles
 
 from domain.question import question_router
 from domain.answer import answer_router
@@ -19,10 +21,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-#@app.get("/hello")
-#def hello():
-#    return {"message" : "hihihi"}
-
 app.include_router(question_router.router)      # 생성한 router 객체를 FastAPI 앱에 등록
 app.include_router(answer_router.router)
 app.include_router(user_router.router)
+app.mount("/assets", StaticFiles(directory="frontend/dist/assets"))
+
+@app.get("/")
+def index():
+    return FileResponse("frontend/dist/index.html")
