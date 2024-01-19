@@ -15,7 +15,7 @@ router = APIRouter(
 @router.get("/list", response_model=question_schema.QuestionList)
 def question_list(db: Session = Depends(get_db),
                   page: int = 0, size: int = 10, keyword: str = ''):
-    total, _question_list = question_crud.get_question_list(db, skip=page*10+1, limit=size, keyword=keyword)
+    total, _question_list = question_crud.get_question_list(db, skip=page*size, limit=size, keyword=keyword)
 #    db = SessionLocal()     # db 세션을 생성
 #    _question_list = db.query(Question).order_by(Question.create_date.desc()).all()  # 질문 목록 API 출력
 #    db.close()              # 사용한 세션을 컨넥션 풀에 반환
